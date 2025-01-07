@@ -37,15 +37,46 @@ Please choose an option:
 
 
 def addEmp():
-    empName = input("what is the name of the employee?")
-    empEmployer = input("what is the ID of the company they work for")
+    empName = input("what is the name of the employee: ")
+    empEmployer = input("what is the ID of the company they work for: ")
     
     cursor.execute("INSERT INTO employees (name, company_id) VALUES (%s, %s)", [empName, empEmployer] )
     connection.commit()
+    print(f"employee {empName} has been added")
 
 
+def deleteEmp():
+        empId = input("Enter the id of the employee you wish to delete: ")
+        cursor.execute("DELETE FROM employees WHERE id = %s", [empId])
+        connection.commit()
 
 
+def updateEmp():
+        empId = input("Enter the id of the employee you wish to update: ")
+        newName = input("Enter the employees new name: ")
+        newComp = input("Enter the employees new companyId: ")
+        cursor.execute("UPDATE employees SET name = %s, company_id =%s WHERE id = %s", [newName, newComp, empId])
+        connection.commit()
+        
+def readEmp():
+    cursor.execute("SELECT * FROM employees")
+    print(cursor.fetchall())
+
+def addCom():
+    companyName = input("What is the name of the Company?")
+    cursor.execute("INSERT INTO companies (name) VALUES (%s)", [companyName])
+    connection.commit()
+    print(f"Company {companyName} added !")
+
+def deleteCOM():
+    comId = input("Enter the id of the Company you wish to delete: ")
+    cursor.execute("DELETE FROM companies WHERE id = %s", [comId])
+    connection.commit()
+    print(f"company deleted")
+    
+    
+    
+    
 userchoice = 999 
 
 
@@ -55,24 +86,38 @@ userchoice = 999
 # )
 while int(userchoice) != 9:
     
+    # """
+# Welcome to the Employee Management System.
+# Please choose an option:
+# 1. Add Employee
+# 2. Delete Employee
+# 3. Update Employee
+# 4. Read Employee
+# 5. Add Company
+# 6. Delete Company
+# 7. Update Company
+# 8. Read Company
+# 9. Exit
+# """
     userchoice = input(welcome_message)
     match int(userchoice):
         case 1:
-            print("one")
             addEmp()
             
-            
-            
         case 2:
-            print("two")
+            deleteEmp()
+            
         case 3:
-            print("three")
+            updateEmp()
+            
         case 4:
-            print("four")
+            readEmp()   
+             
         case 5:
-            print("five")
+            addCom()
+            
         case 6:
-            print("six")
+            deleteCOM()
         case 7:
             print("seven")
         case 8:
