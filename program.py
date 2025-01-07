@@ -59,8 +59,15 @@ def updateEmp():
         connection.commit()
         
 def readEmp():
+    #formatting from the chat ghipitah 
     cursor.execute("SELECT * FROM employees")
-    print(cursor.fetchall())
+    rows = cursor.fetchall()
+    print(f"{'id':<5} {'| name':<10} {'| company_id|':<10}")
+    print("-" * 30)  # Print a separator line
+    for row in rows:
+        print(f"{row[0]:<5} |{row[1]:<10}| {row[2]:<10}|")
+    
+    # print(cursor.fetchall())
 
 def addCom():
     companyName = input("What is the name of the Company?")
@@ -73,8 +80,26 @@ def deleteCOM():
     cursor.execute("DELETE FROM companies WHERE id = %s", [comId])
     connection.commit()
     print(f"company deleted")
+
+def updateCom():
+    comId = input("Enter the id of the Company you wish to update: ")
+    newComName = input("Enter the new name of the company: ")
+    cursor.execute("UPDATE companies SET name = %s WHERE id = %s", [newComName, comId])
+    connection.commit()
     
-    
+def readCom():
+    cursor.execute("SELECT * FROM companies")
+    rows = cursor.fetchall()
+    print(f"{'id':<5} {'| name':<10}")
+    print("-" * 30)
+    for row in rows:
+        print(f"{row[0]:<5} | {row[1]:<10}")
+
+
+
+
+
+    # print(cursor.fetchall())
     
     
 userchoice = 999 
@@ -119,12 +144,14 @@ while int(userchoice) != 9:
         case 6:
             deleteCOM()
         case 7:
-            print("seven")
+            updateCom()
         case 8:
-            print("eight")
+            readCom()
         case 9:
             print("Exiting...") 
             connection.close()
+        case _:
+            print("invalid choice. do better")
             
 
 
